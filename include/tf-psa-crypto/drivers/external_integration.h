@@ -143,6 +143,25 @@ psa_driver_external_integration_hash_finish(psa_driver_external_integration_hash
 					    uint8_t *hash, size_t hash_size, size_t *hash_length);
 
 /**
+ * @brief Clone a multi-part hash operation
+ *
+ * @retval PSA_SUCCESS On success
+ * @retval PSA_ERROR_* Error codes on failure
+ */
+psa_status_t psa_driver_external_integration_hash_clone(
+	const psa_driver_external_integration_hash_operation_t *source_ctx,
+	psa_driver_external_integration_hash_operation_t *target_ctx);
+
+/**
+ * @brief Abort a multi-part hash operation
+ *
+ * @retval PSA_SUCCESS On success
+ * @retval PSA_ERROR_* Error codes on failure
+ */
+psa_status_t
+psa_driver_external_integration_hash_abort(psa_driver_external_integration_hash_operation_t *ctx);
+
+/**
  * @brief AEAD encrypt a buffer in a single operation
  *
  * @retval PSA_SUCCESS On success

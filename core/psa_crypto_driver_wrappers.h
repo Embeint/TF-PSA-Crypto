@@ -1565,6 +1565,13 @@ static inline psa_status_t psa_driver_wrapper_hash_clone(
             return( mbedtls_psa_hash_clone( &source_operation->ctx.mbedtls_ctx,
                                             &target_operation->ctx.mbedtls_ctx ) );
 #endif
+#if defined(PSA_CRYPTO_DRIVER_EXTERNAL_INTEGRATION)
+        case PSA_CRYPTO_EXTERNAL_INTEGRATION_DRIVER_ID:
+            target_operation->id = PSA_CRYPTO_EXTERNAL_INTEGRATION_DRIVER_ID;
+            return psa_driver_external_integration_hash_clone(
+                &source_operation->ctx.external_integration_ctx,
+                &target_operation->ctx.external_integration_ctx);
+#endif
 #if defined(PSA_CRYPTO_DRIVER_TEST)
         case MBEDTLS_TEST_TRANSPARENT_DRIVER_ID:
             target_operation->id = MBEDTLS_TEST_TRANSPARENT_DRIVER_ID;
@@ -1649,6 +1656,11 @@ static inline psa_status_t psa_driver_wrapper_hash_abort(
 #if defined(MBEDTLS_PSA_BUILTIN_HASH)
         case PSA_CRYPTO_MBED_TLS_DRIVER_ID:
             return( mbedtls_psa_hash_abort( &operation->ctx.mbedtls_ctx ) );
+#endif
+#if defined(PSA_CRYPTO_DRIVER_EXTERNAL_INTEGRATION)
+        case PSA_CRYPTO_EXTERNAL_INTEGRATION_DRIVER_ID:
+            return psa_driver_external_integration_hash_abort(
+                &operation->ctx.external_integration_ctx);
 #endif
 #if defined(PSA_CRYPTO_DRIVER_TEST)
         case MBEDTLS_TEST_TRANSPARENT_DRIVER_ID:
